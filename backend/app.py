@@ -9,7 +9,7 @@ def create_app(config_class=Config):
     def health_check():
         return jsonify({"status": "healthy"})
 
-    # Register Blueprints
+
     from routes.products import bp as products_bp
     from routes.auth import bp as auth_bp
     from routes.cart import bp as cart_bp

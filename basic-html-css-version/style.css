@@ -1,4 +1,4 @@
-/* Reset & Base Styles */
+
 * {
     margin: 0;
     padding: 0;
@@ -15,7 +15,7 @@ body {
     min-height: 100vh;
 }
 
-/* Navbar */
+
 .navbar {
     background-color: #ffffff;
     padding: 1.5rem 3rem;
@@ -55,7 +55,7 @@ body {
     color: #777;
 }
 
-/* Hero Section */
+
 .hero {
     height: 80vh;
     background-color: #111;
@@ -97,7 +97,7 @@ body {
     color: #111;
 }
 
-/* About Section */
+
 .about {
     padding: 5rem 2rem;
     text-align: center;
@@ -117,7 +117,7 @@ body {
     font-family: 'Inter', sans-serif;
 }
 
-/* Footer */
+
 footer {
     background-color: #111;
     color: #fff;

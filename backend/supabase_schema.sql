@@ -1,9 +1,9 @@
--- Supabase DB Schema Setup
 
--- Enable UUID extension globally
+
+
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
--- Users (Extended Profile, assumes integration with auth.users)
+
 CREATE TABLE public.profiles (
     id UUID REFERENCES auth.users(id) PRIMARY KEY,
     full_name TEXT,
@@ -11,7 +11,7 @@ CREATE TABLE public.profiles (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
 );
 
--- Categories
+
 CREATE TABLE public.categories (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     name TEXT NOT NULL,
@@ -20,7 +20,7 @@ CREATE TABLE public.categories (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
 );
 
--- Products
+
 CREATE TABLE public.products (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     title TEXT NOT NULL,
@@ -34,26 +34,26 @@ CREATE TABLE public.products (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
 );
 
--- Carts
+
 CREATE TABLE public.carts (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     user_id UUID REFERENCES auth.users(id) UNIQUE,
-    items JSONB DEFAULT '[]'::jsonb, -- Array of {product_id, quantity, price}
+    items JSONB DEFAULT '[]'::jsonb,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL,
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
 );
 
--- Orders
+
 CREATE TABLE public.orders (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     user_id UUID REFERENCES auth.users(id) NOT NULL,
     total DECIMAL(10, 2) NOT NULL,
-    status TEXT DEFAULT 'pending', -- pending, paid, shipped, delivered, cancelled
+    status TEXT DEFAULT 'pending',
     shipping_address JSONB NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
 );
 
--- Order Items
+
 CREATE TABLE public.order_items (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     order_id UUID REFERENCES public.orders(id) ON DELETE CASCADE,
@@ -62,7 +62,7 @@ CREATE TABLE public.order_items (
     price_at_purchase DECIMAL(10, 2) NOT NULL
 );
 
--- Reviews
+
 CREATE TABLE public.reviews (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     product_id UUID REFERENCES public.products(id) ON DELETE CASCADE,
@@ -72,6 +72,4 @@ CREATE TABLE public.reviews (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
 );
 
--- RLS (Row Level Security) Optional Setup
--- ALTER TABLE public.products ENABLE ROW LEVEL SECURITY;
--- CREATE POLICY "Products are visible to everyone." ON public.products FOR SELECT USING (true);
+
